@@ -52,11 +52,21 @@
         <br>  
         <table border='1'>
           <tr>
-              <th>Nome</th><th>E-mail</th><th>Telefone</th><th>Assunto</th><th>Mensagem</th><th>Opções de resposta</th>
+              <th>Nome</th><th>E-mail</th><th>Telefone</th><th>Assunto</th><th>Mensagem</th><th>Opções de resposta</th><th>Ações</th>
           </tr>
           {% for value in contatos %}                        
             <tr>
-              <td>{{contatos[value]['nome']}}</td><td>{{value}}</td><td>{{contatos[value]['telefone']}}</td><td>{{contatos[value]['assunto']}}</td><td>{{contatos[value]['mensagem']}}</td><td>{{contatos[value]['resposta']}}</td>
+              <td>{{contatos[value]['nome']}}</td>
+              <td>{{value}}</td>
+              <td>{{contatos[value]['telefone']}}</td>
+              <td>{{contatos[value]['assunto']}}</td>
+              <td>{{contatos[value]['mensagem']}}</td>
+              <td>{{contatos[value]['resposta']}}</td>
+              <td>
+                <form action="/apagarRegistro" method='POST'>
+                    <input type='hidden' name='email' value='{{value}}'>
+                    <input type='submit' value='Apagar Registro' name='delete' />
+                </form> </td>
             </tr>  
           {% endfor %}                      
         </table>       

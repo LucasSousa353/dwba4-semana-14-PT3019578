@@ -41,4 +41,25 @@ def limparBanco():
     logging.exception(e)
     return flask.render_template('contatos.html')
 
+@app.route('/apagarRegistro', methods=['POST'])
+def apagarRegistro():
+  try:
+      # Obtém o email do pedido POST
+      email = flask.request.form.get('email')
+
+      # Verifica se o email foi fornecido
+      if email:
+          # Verifica se o email está no banco de dados
+          if email in db["contatos"]:
+              # Remove o registro com base no email (chave primária)
+              del db["contatos"][email]
+              return flask.render_template('contatos.html', contatos=db["contatos"])
+          else:
+              return flask.render_template('contatos.html', message='Email não encontrado no banco de dados', contatos=db["contatos"])
+      else:
+          return flask.render_template('contatos.html', message='O email não foi fornecido no pedido', contatos=db["contatos"])
+  except Exception as e:
+      logging.exception(e)
+      return flask.render_template('contatos.html', message='Ocorreu um erro ao apagar o registro', contatos=db["contatos"])
+    
 app.run('0.0.0.0')
